@@ -148,3 +148,86 @@ elif ( n == 8):
     print("Bitwise AND is: ", demo7(a,b))
 else:   
    print( "Invalid input, please enter a number between 1 and 4.")
+
+
+
+
+
+
+
+
+
+
+   # calculator 
+   import tkinter as tk
+
+def calculate_expression(expr):
+    try:
+        # Extract numbers and operator manually
+        for op in ["**", "//", "&", "|", "+", "-", "*", "/", "%"]:
+            if op in expr:
+                a, b = expr.split(op)
+                a = int(a.strip())
+                b = int(b.strip())
+
+                if op == "+":
+                    return str(a + b)
+                elif op == "-":
+                    return str(a - b)
+                elif op == "*":
+                    return str(a * b)
+                elif op == "/":
+                    return str(a / b) if b != 0 else "Error"
+                elif op == "%":
+                    return str(a % b)
+                elif op == "**":
+                    return str(a ** b)
+                elif op == "//":
+                    return str(a // b)
+                elif op == "&":
+                    return str(a & b)
+                elif op == "|":
+                    return str(a | b)
+        return "Invalid"
+    except:
+        return "Error"
+
+def click(event):
+    text = event.widget.cget("text")
+    if text == "=":
+        result = calculate_expression(entry.get())
+        entry.delete(0, tk.END)
+        entry.insert(0, result)
+    elif text == "C":
+        entry.delete(0, tk.END)
+    else:
+        entry.insert(tk.END, text)
+
+# Set up the main window
+root = tk.Tk()
+root.title("Custom Calculator")
+
+entry = tk.Entry(root, font="Arial 20", bd=8, relief=tk.RIDGE, justify=tk.RIGHT)
+entry.pack(fill=tk.BOTH, ipadx=8, padx=10, pady=10)
+
+button_frame = tk.Frame(root)
+button_frame.pack()
+
+buttons = [
+    ["7", "8", "9", "/", "//"],
+    ["4", "5", "6", "*", "**"],
+    ["1", "2", "3", "-", "%"],
+    ["C", "0", "=", "+", "&"],
+    ["|"]  # Bitwise OR (single button row)
+]
+
+for row in buttons:
+    frame = tk.Frame(button_frame)
+    frame.pack()
+    for btn in row:
+        button = tk.Button(frame, text=btn, font="Arial 18", width=5, height=2)
+        button.pack(side=tk.LEFT, padx=5, pady=5)
+        button.bind("<Button-1>", click)
+
+root.mainloop()
+
